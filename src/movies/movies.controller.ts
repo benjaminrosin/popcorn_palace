@@ -1,33 +1,33 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { MoviesService } from './movies.service';
 
 @Controller('movies')
 export class MoviesController {
+  constructor(private readonly moviesService: MoviesService) {}
+
   // GET    /movies/all
   @Get('all')
-  findAll() {
-    return Promise.resolve([]);
-    // returns arr of all movies
+  async findAll() {
+    return this.moviesService.findAll();
   }
 
   // POST   /movies
   @Post()
-  addMovie(@Body() movie: {}){
-    return Promise.resolve({})
-    // returns json of the new movie added
+  async addMovie(@Body() movie: {}){
+    return this.moviesService.addMovie(movie);
   }
 
   // POST   /movies/update/:title
   @Post('update/:title')
   updateMovie(@Param('title') title: string, @Body() movie: {}) {
-    return Promise.resolve({})
-    // returns 200
+
+    return this.moviesService.updateMovie(title, movie);
   }
 
   // DELETE /movies/:title
   @Delete(':title')
   deleteMovie(@Param('title') title: string) {
-    return Promise.resolve({})
-    // returns 200
+    return this.moviesService.deleteMovie(title);
   }
 
   // need to handel other routs
