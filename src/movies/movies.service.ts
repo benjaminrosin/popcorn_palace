@@ -1,18 +1,27 @@
-import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { Movie } from "./movie.model";
 import { CreateMovieDTO, UpdateMovieDTO } from "./movie.DTO";
+import { ValidationError } from "sequelize";
 
 @Injectable()
 export class MoviesService {
   constructor(@InjectModel(Movie) private movieDatabase: typeof Movie) {}
 
   async findAll() {
-    return await this.movieDatabase.findAll();
+    return await this.movieDatabase.findAll({attributes: { exclude: ['createdAt', 'updatedAt'] }});
   }
 
   async addMovie(movie: CreateMovieDTO) {
-    return await this.movieDatabase.create({...movie});
+    try{
+      return await this.movieDatabase.create({...movie});
+    }
+    catch (error) {
+      if (error instanceof ValidationError) {
+        throw new BadRequestException(error.errors[0].message);
+      }
+      throw error;
+    }
   }
 
   async updateMovie(title: string, movie: UpdateMovieDTO) {

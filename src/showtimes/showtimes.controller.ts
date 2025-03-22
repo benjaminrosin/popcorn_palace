@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Post, ValidationPipe } from "@nestjs/common";
 import { ShowTimesService } from "./showtimes.service"
 import { CreateShowtimeDTO, UpdateShowtimeDTO } from "./showTime.DTO";
 
@@ -6,34 +6,30 @@ import { CreateShowtimeDTO, UpdateShowtimeDTO } from "./showTime.DTO";
 export class ShowTimesController {
   constructor(private readonly showTimesService: ShowTimesService) {}
 
-  // GET /showtimes/all
-  @Get('all')
+  @Get('all') // GET  /showtimes/all
   async findAll() {
     return this.showTimesService.findAll();
   }
 
-  // GET /showtimes/{showtimeId}
-  @Get(':showtimeId')
-  async findOne(@Param('showtimeId') showtimeId: string) {
-    return this.showTimesService.findOne(+showtimeId);
+  @Get(':showtimeId') // GET  /showtimes/{showtimeId}
+  async findOne(@Param('showtimeId', ParseIntPipe) showtimeId: number) {
+    return this.showTimesService.findOne(showtimeId);
   }
 
-  // POST /showtimes
-  @Post()
-  async addShow(@Body() show: CreateShowtimeDTO){
+  @Post() // POST /showtimes
+  @HttpCode(200)
+  async addShow(@Body(ValidationPipe) show: CreateShowtimeDTO){
     return this.showTimesService.addShow(show);
   }
 
-  // POST /showtimes/update/{showtimeId}
-  @Post('update/:showtimeId')
-  updateShow(@Param('showtimeId') showtimeId: string, @Body() show: UpdateShowtimeDTO) {
-
-    return this.showTimesService.updateShow(+showtimeId, show);
+  @Post('update/:showtimeId') // POST /showtimes/update/{showtimeId}
+  @HttpCode(200)
+  updateShow(@Param('showtimeId', ParseIntPipe) showtimeId: number, @Body(ValidationPipe) show: UpdateShowtimeDTO) {
+    return this.showTimesService.updateShow(showtimeId, show);
   }
 
-  // DELETE /showtimes/{showtimeId}
-  @Delete(':showtimeId')
-  deleteShow(@Param('showtimeId') showtimeId: string) {
+  @Delete(':showtimeId')  // DELETE /showtimes/{showtimeId}
+  deleteShow(@Param('showtimeId', ParseIntPipe) showtimeId: number) {
     return this.showTimesService.deleteShow(+showtimeId);
   }
 
