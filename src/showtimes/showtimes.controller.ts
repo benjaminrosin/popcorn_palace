@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { ShowTimesService } from "./showtimes.service"
+import { CreateShowtimeDTO, UpdateShowtimeDTO } from "./showTime.DTO";
 
 @Controller('showtimes')
 export class ShowTimesController {
@@ -19,13 +20,13 @@ export class ShowTimesController {
 
   // POST /showtimes
   @Post()
-  async addShow(@Body() show: {}){
+  async addShow(@Body() show: CreateShowtimeDTO){
     return this.showTimesService.addShow(show);
   }
 
   // POST /showtimes/update/{showtimeId}
   @Post('update/:showtimeId')
-  updateShow(@Param('showtimeId') showtimeId: string, @Body() show: {}) {
+  updateShow(@Param('showtimeId') showtimeId: string, @Body() show: UpdateShowtimeDTO) {
 
     return this.showTimesService.updateShow(+showtimeId, show);
   }

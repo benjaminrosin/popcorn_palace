@@ -1,4 +1,5 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasMany } from "sequelize-typescript";
+import { ShowTime } from "../showtimes/showtimes.model";
 
 @Table({ tableName: 'movies' })
 export class Movie extends Model {
@@ -32,4 +33,7 @@ export class Movie extends Model {
     allowNull: false,
   })
   releaseYear: number;
+
+  @HasMany(() => ShowTime)
+  showtimes: ShowTime[];
 }

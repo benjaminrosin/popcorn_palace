@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { MoviesService } from './movies.service';
+import { CreateMovieDTO, UpdateMovieDTO } from "./movie.DTO";
 
 @Controller('movies')
 export class MoviesController {
@@ -13,13 +14,13 @@ export class MoviesController {
 
   // POST   /movies
   @Post()
-  async addMovie(@Body() movie: {}){
+  async addMovie(@Body() movie: CreateMovieDTO){
     return this.moviesService.addMovie(movie);
   }
 
   // POST   /movies/update/:title
   @Post('update/:title')
-  updateMovie(@Param('title') title: string, @Body() movie: {}) {
+  updateMovie(@Param('title') title: string, @Body() movie: UpdateMovieDTO) {
 
     return this.moviesService.updateMovie(title, movie);
   }

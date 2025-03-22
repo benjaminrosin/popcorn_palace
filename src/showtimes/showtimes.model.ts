@@ -1,7 +1,15 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from "sequelize-typescript";
+import { Movie } from "../movies/movie.model";
 
 @Table({ tableName: 'showTimes' })
 export class ShowTime extends Model {
+  @ForeignKey(() => Movie)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  movieId: Number;
+
   @Column({
     type: DataType.NUMBER,
     allowNull: false,
@@ -25,6 +33,9 @@ export class ShowTime extends Model {
     allowNull: false,
   })
   endTime: Date;
+
+  @BelongsTo(() => Movie, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  movie: Movie;
 
 }
 

@@ -4,17 +4,10 @@ import { AppService } from './app.service';
 import { MoviesModule } from './movies/movies.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ShowTimesModule } from './showtimes/showtimes.module';
+import { DatabaseModule } from "./Database.module";
 
 @Module({
-  imports: [SequelizeModule.forRoot({
-      dialect: 'sqlite',
-      storage: './database.sqlite',
-      autoLoadModels: true,
-      synchronize: true,
-    }),
-    MoviesModule,
-    ShowTimesModule,
-  ],
+  imports: [DatabaseModule, MoviesModule, ShowTimesModule, ],
   controllers: [AppController],
   providers: [AppService],
 })
