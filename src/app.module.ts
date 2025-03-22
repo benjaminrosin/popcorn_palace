@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MoviesModule } from './movies/movies.module';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { ShowtimesModule } from './showtimes/showtimes.module';
 
 @Module({
   imports: [SequelizeModule.forRoot({
@@ -12,6 +13,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
       synchronize: true,
     }),
     MoviesModule,
+    ShowtimesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
