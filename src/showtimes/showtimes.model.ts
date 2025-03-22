@@ -6,7 +6,7 @@ export class ShowTime extends Model {
   @ForeignKey(() => Movie)
   @Column({
     type: DataType.INTEGER,
-    allowNull: true,
+    allowNull: false,
   })
   movieId: Number;
 
