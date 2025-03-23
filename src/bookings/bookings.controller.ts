@@ -6,7 +6,7 @@ import { CreateBooking } from "./booking.DTO";
 export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 
-  @Get()  // GET  /bookings
+  @Get('all')  // GET  /bookings/all
   getAllBookings() {
     return this.bookingsService.findAll();
   }

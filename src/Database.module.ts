@@ -8,7 +8,7 @@ import { Booking } from "./bookings/booking.model";
   imports: [
     SequelizeModule.forRoot({
       dialect: 'sqlite',
-      storage: 'database.sqlite',
+      storage: process.env.NODE_ENV === 'test' ? ':memory:' : 'database.sqlite',
       autoLoadModels: true,
       synchronize: true,
     }),

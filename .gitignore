@@ -4,6 +4,10 @@
 /build
 package-lock.json
 
+# local
+package-lock.json
+database.sqlite
+
 # Logs
 logs
 *.log

@@ -66,6 +66,8 @@ $ npm run start:prod
 
 ## Test
 
+Due to time constraints, unit tests were run through Postman, and e2e tests are located in the `test/app.e2e-spec.ts` file.
+
 ```bash
 # unit tests
 $ npm run test
